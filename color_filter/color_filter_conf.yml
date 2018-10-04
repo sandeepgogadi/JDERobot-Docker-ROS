@@ -1,0 +1,10 @@
+Introrob:
+
+  cameraA:
+    Server: 1 # 0 -> Deactivate, 1 -> Ice , 2 -> ROS
+    Proxy: "cameraA:tcp -h localhost -p 9999"
+    Format: RGB8
+    Topic: "/IntrorobROS/image_raw"
+    Name: IntrorobCamera
+    
+NodeName: Introrob

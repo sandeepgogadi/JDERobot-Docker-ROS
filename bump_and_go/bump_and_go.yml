@@ -1,0 +1,19 @@
+bump_and_go:
+  NodeName: bump_and_go
+  myLaser:
+    Name: myLaser
+    Proxy: ':default -h  -p '
+    Server: 2
+    Topic: /turtlebotROS/laser/scan
+  myMotors:
+    Name: myMotors
+    Proxy: ':default -h  -p '
+    Server: 2
+    Topic: /turtlebotROS/mobile_base/commands/velocity
+    maxV: 5.0
+    maxW: 0.5
+  myPose:
+    Name: myPose
+    Proxy: ':default -h  -p '
+    Server: 2
+    Topic: /turtlebotROS/odom
