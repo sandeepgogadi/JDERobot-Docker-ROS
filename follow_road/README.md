@@ -15,4 +15,4 @@ The goal of this practice is to implement the logic that allows a quadricopter t
 
 ### Demo
 
-![alt text](https://github.com/sandeepgogadi/JDERobot-Docker-ROS/blob/master/ffollow_road/follow_road.gif "Follow Road")
+![alt text](https://github.com/sandeepgogadi/JDERobot-Docker-ROS/blob/master/follow_road/follow_road.gif "Follow Road")
