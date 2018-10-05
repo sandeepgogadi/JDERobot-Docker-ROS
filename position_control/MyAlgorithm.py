@@ -36,17 +36,17 @@ class MyAlgorithm(threading.Thread):
         threading.Thread.__init__(self, args=self.stop_event)
 
     def initBeacons(self):
-        self.beacons.append(Beacon('baliza1', jderobot.Pose3DData(
+        self.beacons.append(Beacon('goal1', jderobot.Pose3DData(
             0, 5, 0, 0, 0, 0, 0, 0), False, False))
-        self.beacons.append(Beacon('baliza2', jderobot.Pose3DData(
+        self.beacons.append(Beacon('goal2', jderobot.Pose3DData(
             5, 0, 0, 0, 0, 0, 0, 0), False, False))
-        self.beacons.append(Beacon('baliza3', jderobot.Pose3DData(
+        self.beacons.append(Beacon('goal3', jderobot.Pose3DData(
             0, -5, 0, 0, 0, 0, 0, 0), False, False))
         self.beacons.append(
-            Beacon('baliza4', jderobot.Pose3DData(-5, 0, 0, 0, 0, 0, 0, 0), False, False))
-        self.beacons.append(Beacon('baliza5', jderobot.Pose3DData(
+            Beacon('goal4', jderobot.Pose3DData(-5, 0, 0, 0, 0, 0, 0, 0), False, False))
+        self.beacons.append(Beacon('goal5', jderobot.Pose3DData(
             10, 0, 0, 0, 0, 0, 0, 0), False, False))
-        self.beacons.append(Beacon('inicio', jderobot.Pose3DData(
+        self.beacons.append(Beacon('start', jderobot.Pose3DData(
             0, 0, 0, 0, 0, 0, 0, 0), False, False))
 
     def getNextBeacon(self):
@@ -88,7 +88,6 @@ class MyAlgorithm(threading.Thread):
         self.kill_event.set()
 
     def execute(self):
-        # Add your code here
         # use: self.pose.getPose3d().x
         #      self.pose.getPose3d().y
         # to get the coordinates of the drone in the x,y plane

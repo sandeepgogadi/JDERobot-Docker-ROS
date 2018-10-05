@@ -105,12 +105,7 @@ class MyAlgorithm(threading.Thread):
 
     def execute(self):
 
-        # Add your code here
         print "Runing"
-
-        # EXAMPLE OF HOW TO SEND INFORMATION TO THE ROBOT ACTUATORS
-        # self.motors.sendV(10)
-        # self.motors.sendW(5)
 
         # Get the position of the robot
         xCar = self.pose3d.getPose3d().x

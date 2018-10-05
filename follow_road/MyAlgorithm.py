@@ -85,7 +85,6 @@ class MyAlgorithm(threading.Thread):
     def execute(self):
         input_image = self.camera.getImage().data
         if input_image is not None:
-            # Add your code here
             #img = np.copy(input_image)
 
             # self.setImageFiltered(img)

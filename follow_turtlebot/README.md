@@ -1,51 +1,16 @@
-# Follow turtlebot excercise
+[back to Robotics Playground](https://github.com/sandeepgogadi/Robotics-Playground)
 
-The exercise consists of following a robot on the ground using a drone. The movements described by the ground robot will have to be followed by the air robot.
+[back to JDERobot ROS Docker](https://github.com/sandeepgogadi/JDERobot-Docker-ROS)
 
-## How to execute?
-* In a terminal launch the gazebo simulator:
+# Drone follow the ground robot
 
-    `gazebo ardrone-turtlebot.world`
+### Execute
+1. In a terminal launch the gazebo simulator:
+`gazebo ardrone-turtlebot.world`
+2. In other terminal launch the turtlebot robot:
+`kobukiViewer turtlebot.yml`
+3. In another terminal lauch the follow_turtlebot component:
+`python2 ./follow_turtlebot.py follow_turtlebot_conf.yml`
 
-* In other terminal launch the turtlebot robot:
-
-    `kobukiViewer turtlebot.yml`
-
-* In another terminal lauch the follow_turtlebot component:
-
-    `python2 ./follow_turtlebot.py follow_turtlebot_conf.yml`
-
-* If you want to find the values of your color filter you can launch the colorTuner component:
-
-    `colorTuner color_tuner_conf.yml`
-
-## How to do the practice?
-To carry out the practice, you have to edit the file MyAlgorithms.py and insert in it your code, which gives intelligence to the turtlebot robot.
-
-## Where to insert the code?
-[MyAlgorithm.py](MyAlgorithm.py#L62)
-```
-    # Add your code here
-
-    input_image = self.camera.getImage()
-    if input_image is not None:
-        self.camera.setColorImage(input_image)
-        '''
-        If you want show a thresold image (black and white image)
-        self.camera.setThresoldImage(input_image)
-        '''
-```
-
-## API
-* `cameraL.getImage()` - to get the left image of the stereo pair.
-* `self.camera.setThresholdImage()`: If you want show a black and white image.
-* `self.cmdvel.sendCMDVel(self,vx,vy,vz,ax,ay,az)`: sends linear and angular speed commands to the drone.
-
-
-## Demonstrative video
-[Video](https://www.youtube.com/watch?v=uehDVlBzpmU)
-
-* *Base code made by Alberto Martín (@almartinflorido)*
-* *Code of practice performed by Francisco Rivas (@chanfr)*
-* *Gazebo models and worlds made by Francisco Pérez (@fqez)*
-* *Updated code made by Pablo Moreno (@PabloMorenoVera)*
+### Summary
+The first step is to create a pid controller to use it in x and y axis. Next we use the input image from the drone to find the turtlebot. The top of the turtlebot is a green rectangle so using color filtering we can identify the turtlebot.If the green rectangle of the turtlebot is detected in the visual field then we will have to execute an algorithm to correct the position of the drone and get closer to the turtlebot. If it is not detected it is because it is not in the visual field of the drone and then you have to raise the drone until you get to see the turtlebot. One we have the turtlebot in our view we then calculate the error of the drone position. To do this our error will be the center of the rectangle detected by the turtlebot on each axis minus the center of the image of the drone camera on each axis. Using the pid controller we control the position in both directions so that position of turtlebot is centred in the image.

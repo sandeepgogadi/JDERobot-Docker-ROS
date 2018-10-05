@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import threading
 import time
 from datetime import datetime
@@ -12,13 +12,14 @@ import matplotlib.pyplot as plt
 
 time_cycle = 80
 
+
 class MyAlgorithm(threading.Thread):
 
     def __init__(self, camera, motors):
         self.camera = camera
         self.motors = motors
-        self.threshold_image = np.zeros((640,360,3), np.uint8)
-        self.color_image = np.zeros((640,360,3), np.uint8)
+        self.threshold_image = np.zeros((640, 360, 3), np.uint8)
+        self.color_image = np.zeros((640, 360, 3), np.uint8)
         self.stop_event = threading.Event()
         self.kill_event = threading.Event()
         self.lock = threading.Lock()
@@ -40,35 +41,35 @@ class MyAlgorithm(threading.Thread):
         self.lock.release()
         return img
 
-    def set_color_image (self, image):
-        img  = np.copy(image)
+    def set_color_image(self, image):
+        img = np.copy(image)
         if len(img.shape) == 2:
-          img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+            img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
         self.color_image_lock.acquire()
         self.color_image = img
         self.color_image_lock.release()
 
-    def get_color_image (self):
+    def get_color_image(self):
         self.color_image_lock.acquire()
         img = np.copy(self.color_image)
         self.color_image_lock.release()
         return img
 
-    def set_threshold_image (self, image):
+    def set_threshold_image(self, image):
         img = np.copy(image)
         if len(img.shape) == 2:
-          img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+            img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
         self.threshold_image_lock.acquire()
         self.threshold_image = img
         self.threshold_image_lock.release()
 
-    def get_threshold_image (self):
+    def get_threshold_image(self):
         self.threshold_image_lock.acquire()
-        img  = np.copy(self.threshold_image)
+        img = np.copy(self.threshold_image)
         self.threshold_image_lock.release()
         return img
 
-    def run (self):
+    def run(self):
 
         while (not self.kill_event.is_set()):
             start_time = datetime.now()
@@ -81,16 +82,16 @@ class MyAlgorithm(threading.Thread):
             if (ms < time_cycle):
                 time.sleep((time_cycle - ms) / 1000.0)
 
-    def stop (self):
+    def stop(self):
         self.stop_event.set()
 
-    def play (self):
+    def play(self):
         if self.is_alive():
             self.stop_event.clear()
         else:
             self.start()
 
-    def kill (self):
+    def kill(self):
         self.kill_event.set()
 
     def pid(self, x, width, flag=None):
@@ -99,7 +100,7 @@ class MyAlgorithm(threading.Thread):
         prev_cte = self.prev_cte
         int_cte = self.int_cte
         cte = width//2 - x
-        diff_cte = (cte - prev_cte) /self.speed
+        diff_cte = (cte - prev_cte) / self.speed
         prev_cte = cte
         int_cte = int_cte + cte
         steer = -kp*cte - kd*diff_cte - ki*int_cte
@@ -140,32 +141,23 @@ class MyAlgorithm(threading.Thread):
         self.dp = dp
 
     def algorithm(self):
-        #GETTING THE IMAGES
+        # GETTING THE IMAGES
         image = self.getImage()
 
-        #break
-
-        # Add your code here
         print "Runing"
-
-        #EXAMPLE OF HOW TO SEND INFORMATION TO THE ROBOT ACTUATORS
-        #self.motors.setV(10)
-        #self.motors.setW(5)
-        #self.motors.sendV(0)
-        #self.motors.sendW(0)
 
         img = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
         height, width, channels = img.shape
         crop = img[230:400, :, :]
-        lower = np.array([0,235,60], dtype='uint8')
-        upper = np.array([180,255,255], dtype='uint8')
+        lower = np.array([0, 235, 60], dtype='uint8')
+        upper = np.array([180, 255, 255], dtype='uint8')
         mask = cv2.inRange(crop, lower, upper)
-        extraction = cv2.bitwise_and(crop, crop, mask = mask)
+        extraction = cv2.bitwise_and(crop, crop, mask=mask)
         m = cv2.moments(mask, False)
         try:
-          x, y = m['m10']/m['m00'], m['m01']/m['m00']
+            x, y = m['m10']/m['m00'], m['m01']/m['m00']
         except ZeroDivisionError:
-          x, y = width//2, height//2
+            x, y = width//2, height//2
         #extraction_img = cv2.circle(extraction,(int(x), int(y)), 2,(0,255,0),3)
         self.step += 1
         # error < 0, steer left
@@ -177,13 +169,13 @@ class MyAlgorithm(threading.Thread):
         elif abs(w) < .001:
             v = 15
         elif abs(w) < .01:
-            v = 10 #5
+            v = 10  # 5
         elif abs(w) < .1:
-            v = 5 #2.5
+            v = 5  # 2.5
         elif abs(w) < .5:
             v = 2.5
         else:
-            v = 1 #1
+            v = 1  # 1
         self.speed = v
         # w > 0, steer left
         #self.speed = v
@@ -192,5 +184,5 @@ class MyAlgorithm(threading.Thread):
         self.motors.sendV(v)
         self.motors.sendW(w)
 
-        #SHOW THE FILTERED IMAGE ON THE GUI
+        # SHOW THE FILTERED IMAGE ON THE GUI
         self.set_threshold_image(mask)

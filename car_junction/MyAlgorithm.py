@@ -145,12 +145,12 @@ class MyAlgorithm(threading.Thread):
 
     def findCar(self, cont, image):
         if len(cont) != 0:
-            # Si hay movimiento
-            # Recorremos todos los contornos encontrados
+            # If there is movement
+            # We go through all the contours found
             for c in cont:
-                # Obtenemos el bounds del contorno, el rectángulo mayor que engloba al contorno
+                # We obtain the bounds of the contour, the largest rectangle that encompasses the contour
                 (x, y, w, h) = cv2.boundingRect(c)
-                # Dibujamos el rectángulo del bounds
+                # We draw the bounds box
                 cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 if self.detectionCar < self.MAX_DETECTION:
                     self.detectionCar += self.ADD_DET
@@ -210,7 +210,7 @@ class MyAlgorithm(threading.Thread):
         border_left = 0
         border_right = 0
 
-        # Recorre las columnas de la imagen y la fila 300
+        # Go through the columns of the image and row 300
         for i in range(0, columns-1):
             # We look for the pixels in white
             if i == 0:
@@ -290,8 +290,6 @@ class MyAlgorithm(threading.Thread):
             print ('Turn to: ', self.turnTo)
 
     def execute(self):
-
-        # TODO
 
         # Getting the images
         input_image = self.cameraC.getImage().data

@@ -83,7 +83,6 @@ class MyAlgorithm(threading.Thread):
         self.kill_event.set()
 
     def execute(self):
-       # Add your code here
         detec = False
 
         input_image = self.camera.getImage()

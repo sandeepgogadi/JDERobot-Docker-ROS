@@ -1,47 +1,17 @@
-# Follow_line practice
-The objective of this practice is to perform a PID reactive control capable of following the line painted on the racing circuit.
+[back to Robotics Playground](https://github.com/sandeepgogadi/Robotics-Playground)
 
-## How to execute?
-To launch the infrastructure of this practice, first launch the simulator with the appropriate scenario:
-```
-roslaunch /opt/jderobot/share/jderobot/launch/f1.launch
-```
-Then you have to execute the academic application, which will incorporate your code:
-```
-python2 ./follow_line.py follow_line_conf.yml
-```
+[back to JDERobot ROS Docker](https://github.com/sandeepgogadi/JDERobot-Docker-ROS)
 
-## How to do the practice?
-To carry out the practice, you have to edit the file MyAlgorithms.py and insert in it your code, which gives intelligence to the autonomous car.
+# Visual follow-line behavior on a Formula1 car
 
-## Where to insert the code?
-[MyAlgorithm.py](MyAlgorithm.py#L87)
-```
-    def execute(self):
-        #GETTING THE IMAGES
-        image = self.getImage()
+### Execute
+1. Launch gazebo world:
+`roslaunch /opt/jderobot/share/jderobot/launch/f1.launch`
+2. launch the code:
+`python2 ./follow_line.py follow_line_conf.yml`
 
-        # Add your code here
-        print "Runing"
+### Summary
 
-        #EXAMPLE OF HOW TO SEND INFORMATION TO THE ROBOT ACTUATORS
-        #self.motors.setV(10)
-        #self.motors.setW(5)
+First step is to convert the image from the camera which is in RGB colorspace to HSV colorspace. We are only interested in the part of the image containing the road so we crop the image containing the road. The line is red in color, using the upper and lower bounds in the hsv color space we create a binary mask containing the road line. Then we calculate the position x of center of the line horizontally. Using this we can compute the error which is difference between image width and x.
 
-        #SHOW THE FILTERED IMAGE ON THE GUI
-        self.set_threshold_image(image)
-```
-
-### API
-* self.getImage() - to get the image 
-* self.motors.setV() - to set the linear speed
-* self.motors.setW() - to set the angular velocity
-* self.set_threshold_image() - allows you to view a debug image or with relevant information. It must be an image in RGB format (Tip: np.dstack())
-
-
-## Demonstrative video
-https://www.youtube.com/watch?v=eNuSQN9egpA
-
-* *Base code made by Alberto Martín (@almartinflorido)*
-* *Code of practice performed by Francisco Rivas (@chanfr)*
-* *Gazebo models and worlds made by Francisco Pérez (@fqez)*
+To control the speed of the car we use a PID controller tuned with twiddle algorithm. The PID gain parameters are 0.2, 0.004, 3.0.   
