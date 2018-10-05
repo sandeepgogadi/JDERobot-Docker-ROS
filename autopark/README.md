@@ -16,3 +16,7 @@ To launch the example, follow the steps below:
 The goal of this practice is to implement the logic of a navigation algorithm for an automated vehicle. The vehicle must find a parking space and park properly.
 
 The algorithm uses front, rear and right laser scanners to check for space and parks the car in that location.
+
+### Demo
+
+![alt text](https://github.com/sandeepgogadi/JDERobot-Docker-ROS/blob/master/autopark/autopark.gif 'Autoparking')

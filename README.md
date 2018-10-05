@@ -22,10 +22,13 @@
 
 ### Environment
 
-Install Docker and Nvidia docker
+Install [Docker] and [Nvidia docker]
 
 Run:
 `bash run.sh`
 
 Attach:
 `bash attach.sh`
+
+[Docker]: https://docs.docker.com/install/linux/docker-ce/ubuntu/
+[Nvidia docker]: https://github.com/NVIDIA/nvidia-docker/wiki/Installation-(version-1.0)

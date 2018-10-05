@@ -12,3 +12,8 @@
 `python2 ./position_control.py position_control_conf.yml`
 
 ### Summary
+
+
+### Demo
+
+![alt text](https://github.com/sandeepgogadi/JDERobot-Docker-ROS/blob/master/position_control/position_control.gif "Position Control")
