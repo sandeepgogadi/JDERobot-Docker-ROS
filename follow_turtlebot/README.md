@@ -17,4 +17,4 @@ The first step is to create a pid controller to use it in x and y axis. Next we 
 
 ### Demo
 
-![alt text](https://github.com/sandeepgogadi/JDERobot-Docker-ROS/blob/master/ffollow_turtlebot/follow_turtlebot.gif "Follow Turtlebot")
+![alt text](https://github.com/sandeepgogadi/JDERobot-Docker-ROS/blob/master/follow_turtlebot/follow_turtlebot.gif "Follow Turtlebot")
